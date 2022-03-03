@@ -1,5 +1,28 @@
 ---
-// console.log(await fetch(`${Astro.request.url.origin}/.netlify/functions/shirts`).then(res => res.text()))
+let galaxies = []
+try {
+	const { data, error } = await fetch(`${Astro.request.url.origin}/.netlify/functions/nasa`, {
+		method: 'POST',
+		body: JSON.stringify({
+			query: `{
+				galaxies {
+					title
+					description
+				}
+			}`
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then(res => res.json())
+
+	if (error || !data?.galaxies?.length) {
+		throw new Error(`Query could not be resolved ${error}`)
+	}
+	galaxies = data.galaxies
+} catch(error) {
+	throw new Error(`Something went wrong when fetching galaxies from functions/nasa.\n${error}`)
+}
 ---
 <html lang="en">
 	<head>
@@ -9,5 +32,11 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		{galaxies.map(galaxy => (
+			<article>
+				<h2>{galaxy.title}</h2>
+				<p>{galaxy.description}</p>
+			</article>
+		))}
 	</body>
 </html>

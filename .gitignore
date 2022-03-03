@@ -4,6 +4,11 @@ dist
 # dependencies
 node_modules/
 
+# cloudflare-specific files
+gql-worker-reference/
+# netlify-specific files
+.netlify/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
