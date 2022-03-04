@@ -1,5 +1,4 @@
 ---
-import '../styles/home.css'
 import Layout from '../layouts/base.astro'
 
 let galaxies = []
@@ -37,3 +36,21 @@ try {
 	))}
 	</main>
 </Layout>
+
+<style>
+a {
+	color: inherit;
+}
+
+main {
+	display: grid;
+	max-width: 800px;
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	main {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+</style>
