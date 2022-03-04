@@ -1,14 +1,8 @@
 import { ApolloServer, gql } from 'apollo-server-lambda'
-import { Client, Create, Collection } from 'faunadb'
-import { config } from 'dotenv'
-import mockGalaxies from './mockGalaxies'
+import { query as q } from 'faunadb'
+import getFaunaClient from '../utils/getFaunaClient'
 
-config()
-
-const faunaClient = new Client({
-  secret: process.env.FAUNA_SECRET,
-  domain: "db.us.fauna.com",
-});
+const faunaClient = getFaunaClient()
 
 const typeDefs = gql`
 type Galaxy {
@@ -23,8 +17,19 @@ type Query {
 `
 const resolvers = {
   Query: {
-    galaxies() {
-      return mockGalaxies
+    async galaxies() {
+      const galaxiesRaw = await faunaClient.query(
+        q.Map(
+          q.Paginate(q.Documents(q.Collection("galaxies"))),
+          q.Lambda("galaxyRef", q.Get(q.Var("galaxyRef")))
+        )
+      )
+      try {
+        return galaxiesRaw.data.map(galaxyRaw => galaxyRaw.data)
+      } catch {
+        console.error(`The fauna galaxies query returned malformed data: ${JSON.stringify(galaxiesRaw, null, 2)}`)
+        return []
+      }
     }
   }
 }
