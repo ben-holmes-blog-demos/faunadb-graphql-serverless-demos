@@ -1,4 +1,4 @@
-export default [{
+module.exports = [{
   title: 'Galaxy Centaurus A',
   description: 'This image of the active galaxy Centaurus A was taken by NASA Galaxy Evolution Explorer on June 7, 2003. The galaxy is located 30 million light-years from Earth and is seen edge on, with a prominent dust lane across the major axis.',
   credits: 'NASA/JPL/Caltech',
