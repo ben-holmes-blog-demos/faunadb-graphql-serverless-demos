@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/base.astro'
+import slugify from 'slugify'
+
+export async function getStaticPaths() {
+  try {
+    const fetchUrl = `${import.meta.env.NETLIFY_LOCAL_URL ?? ''}/.netlify/functions/nasa`
+    const { data, error } = await fetch(fetchUrl, {
+      method: 'POST',
+      body: JSON.stringify({
+        query: `{
+          galaxies {
+            title
+            description
+            imageUrl
+            credits
+          }
+        }`
+      }),
+    }).then(res => res.json())
+
+    if (error || !data?.galaxies?.length) {
+      throw new Error(`Query could not be resolved ${error}`)
+    }
+    return data.galaxies.map(galaxy => ({
+      params: { galaxy: slugify(galaxy.title) },
+      props: galaxy,
+    }))
+  } catch(error) {
+    throw new Error(`Something went wrong when fetching galaxies from functions/nasa.\n${error}`)
+  }
+}
+
+const { title, description, imageUrl, credits } = Astro.props
+
+---
+<Layout title={title} author={credits}>
+  <main>
+    <img class="image" src={imageUrl} alt={title}>
+    <p>{description}</p>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    max-width: 800px;
+  }
+  .image {
+    max-width: 100%;
+    background: black;
+  }
+</style>
