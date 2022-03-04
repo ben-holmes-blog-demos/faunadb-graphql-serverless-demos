@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "astro:dev": "astro dev",
+    "astro:start": "astro dev",
+    "astro:build": "astro build",
+    "astro:preview": "astro preview",
+    "ntl:deploy-preview": "netlify env:import .env && netlify deploy",
+    "ntl:deploy": "netlify env:import .env && netlify deploy --prod"
   },
   "devDependencies": {
     "astro": "^0.23.4"
