@@ -3,31 +3,8 @@ import Layout from '../layouts/base.astro'
 import slugify from 'slugify'
 
 export async function getStaticPaths() {
-  try {
-    const { data, error } = await fetch(`${import.meta.env.API_URL}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        query: `{
-          galaxies {
-            title
-            description
-            imageUrl
-            credits
-          }
-        }`
-      }),
-    }).then(res => res.json())
-
-    if (error || !data?.galaxies?.length) {
-      throw new Error(`Query could not be resolved ${error}`)
-    }
-    return data.galaxies.map(galaxy => ({
-      params: { galaxy: slugify(galaxy.title) },
-      props: galaxy,
-    }))
-  } catch(error) {
-    throw new Error(`Something went wrong when fetching galaxies from functions/nasa.\n${error}`)
-  }
+  // TODO: generate pages for each galaxy
+  return []
 }
 
 const { title, description, imageUrl, credits } = Astro.props
