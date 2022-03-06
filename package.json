@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "astro:dev": "astro dev",
-    "astro:start": "astro dev",
-    "astro:build": "astro build",
-    "astro:preview": "astro preview",
+    "astro:dev": "cd www && astro dev",
+    "astro:start": "cd www && astro dev",
+    "astro:build": "cd www && astro build",
+    "astro:preview": "cd www && astro preview",
+    "ntl:dev": "netlify dev",
     "ntl:deploy-preview": "netlify env:import .env && netlify deploy",
     "ntl:deploy": "netlify env:import .env && netlify deploy --prod"
   },

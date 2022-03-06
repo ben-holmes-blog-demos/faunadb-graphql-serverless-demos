@@ -1,6 +1,6 @@
 import { ApolloServer, gql } from 'apollo-server-lambda'
 import { query as q } from 'faunadb'
-import getFaunaClient from '../utils/getFaunaClient'
+import getFaunaClient from '../../utils/getFaunaClient'
 
 const faunaClient = getFaunaClient()
 
