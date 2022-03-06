@@ -1,4 +1,4 @@
-exports.handler = async () => {
+export const handler = async () => {
   return {
     statusCode: 200,
     body: 'hello galaxy!',
