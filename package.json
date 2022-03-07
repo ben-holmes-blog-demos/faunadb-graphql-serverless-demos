@@ -7,7 +7,8 @@
     "astro:start": "cd www && astro dev",
     "astro:build": "cd www && astro build",
     "astro:preview": "cd www && astro preview",
-    "ntl:dev": "netlify dev",
+    "astro:deploy": "cd www && astro build && netlify deploy",
+    "ntl:dev": "netlify env:import .env && netlify dev",
     "ntl:deploy-preview": "netlify env:import .env && netlify deploy",
     "ntl:deploy": "netlify env:import .env && netlify deploy --prod"
   },
